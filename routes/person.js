@@ -36,7 +36,11 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const result = await Person.find({ _id: id });
-    res.status(200).json(...result);
+
+    if (!result.length)
+      return res.status(422).json({ message: "Usuário não encontrado" });
+
+    return res.status(200).json(...result);
   } catch (err) {
     res.status(500).json({ error: err });
   }
