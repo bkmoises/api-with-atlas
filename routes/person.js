@@ -46,4 +46,46 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, salary, approved } = req.body;
+
+  const person = {
+    name,
+    salary,
+    approved,
+  };
+
+  try {
+    const updatedPerson = await Person.updateOne({ _id: id }, person);
+
+    if (!updatedPerson.matchedCount)
+      return res.status(422).json({ message: "Usuário não encontrado" });
+
+    res.status(200).json(person);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await Person.findOne({ _id: id });
+
+    if (!result)
+      return res.status(422).json({ message: "Usuário não encontrado" });
+
+    try {
+      await Person.deleteOne({ _id: id });
+      return res.status(200).json({});
+    } catch (err) {
+      res.status(500).json({ message: err });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
+});
+
 module.exports = router;
