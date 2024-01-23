@@ -48,6 +48,15 @@ router
     } catch (err) {
       return res.status(500).json();
     }
+  })
+  .delete(async (req, res) => {
+    const { id } = req.params;
+    try {
+      await Person.deleteOne({ _id: id });
+      res.status(204).json();
+    } catch (err) {
+      res.status(404).json();
+    }
   });
 
 module.exports = router;
