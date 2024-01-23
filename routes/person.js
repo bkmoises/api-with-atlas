@@ -26,6 +26,14 @@ router
     return res.status(201).json(createdPerson);
   });
 
-router.route("/:id");
+router.route("/:id").get(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await Person.findOne({ _id: id });
+    if (result) return res.status(200).json(result);
+  } catch (err) {
+    return res.status(204).json();
+  }
+});
 
 module.exports = router;
