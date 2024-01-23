@@ -1,23 +1,23 @@
-const Person = require("../models/person");
+const db = require("../models/person");
 
 const get = async () => {
-  return await Person.find();
+  return await db.find();
 };
 
 const getOne = async (obj) => {
-  return await Person.findOne(obj);
+  return await db.findOne(obj);
 };
 
 const create = async (person) => {
-  return await Person.create(person);
+  return await db.create(person);
 };
 
 const update = async (obj, person) => {
-  return await Person.updateOne(obj, person);
+  return await db.updateOne(obj, person);
 };
 
 const deleteOne = async (obj) => {
-  return await Person.deleteOne(obj);
+  return await db.deleteOne(obj);
 };
 
 module.exports = { get, getOne, create, update, deleteOne };
