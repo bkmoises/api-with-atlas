@@ -1,7 +1,13 @@
-const Person = require("../models/person");
+const {
+  get,
+  getOne,
+  create,
+  update,
+  deleteOne,
+} = require("../database/person");
 
 const getAll = async (_req, res) => {
-  const result = await Person.find();
+  const result = await get();
   if (result.length) return res.status(200).json(result);
   return res.status(204).json();
 };
@@ -16,18 +22,18 @@ const createPerson = async (req, res) => {
       return res.status(400).json({ error: `field ${field} is required` });
   }
 
-  const emailVerify = await Person.findOne({ mail });
+  const emailVerify = await getOne({ mail });
   if (emailVerify)
     return res.status(409).json({ message: "email already exist" });
 
-  const createdPerson = await Person.create(person);
+  const createdPerson = await create(person);
   return res.status(201).json(createdPerson);
 };
 
 const getPerson = async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await Person.findOne({ _id: id });
+    const result = await getOne({ _id: id });
     if (result) return res.status(200).json(result);
   } catch (err) {
     return res.status(204).json();
@@ -39,7 +45,7 @@ const updatePerson = async (req, res) => {
   const { name, mail, age } = req.body;
   const person = { name, mail, age };
   try {
-    const updatedPerson = await Person.updateOne({ _id: id }, person);
+    const updatedPerson = await update({ _id: id }, person);
     if (updatedPerson.matchedCount) return res.status(200).json();
     return res.status(204).json();
   } catch (err) {
@@ -50,7 +56,7 @@ const updatePerson = async (req, res) => {
 const deletePerson = async (req, res) => {
   const { id } = req.params;
   try {
-    await Person.deleteOne({ _id: id });
+    await deleteOne({ _id: id });
     res.status(204).json();
   } catch (err) {
     res.status(404).json();
