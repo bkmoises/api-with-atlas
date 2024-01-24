@@ -1,23 +1,23 @@
 const db = require("../models/person");
 
 const get = async () => {
-  return await db.find();
+  return db.find();
 };
 
 const getOne = async (obj) => {
-  return await db.findOne(obj);
+  return db.findOne(obj);
 };
 
 const create = async (person) => {
-  return await db.create(person);
+  return db.create(person);
 };
 
 const update = async (obj, person) => {
-  return await db.updateOne(obj, person);
+  return db.updateOne(obj, person);
 };
 
 const deleteOne = async (obj) => {
-  return await db.deleteOne(obj);
+  return db.deleteOne(obj);
 };
 
 module.exports = { get, getOne, create, update, deleteOne };
