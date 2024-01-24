@@ -11,8 +11,7 @@ const createPersonController = async (person) => {
   const requiredFields = Object.keys(person);
 
   for (const field of requiredFields) {
-    if (!person[field] || !person[field].length)
-      return HttpResponse.missingParam(field);
+    if (!person[field].length) return HttpResponse.missingParam(field);
   }
 
   const emailVerify = await getOne({ mail: person.mail });
