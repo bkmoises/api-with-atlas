@@ -9,21 +9,31 @@ const {
 
 const createPersonController = async (person) => {
   const requiredFields = Object.keys(person);
+
   for (const field of requiredFields) {
     if (!person[field] || !person[field].length)
       return HttpResponse.missingParam(field);
   }
 
   const emailVerify = await getOne({ mail: person.mail });
+
   if (emailVerify) return HttpResponse.alreadyExist("mail");
 
-  const createdPerson = await create(person);
-  return HttpResponse.created(createdPerson);
+  try {
+    const createdPerson = await create(person);
+    return HttpResponse.created(createdPerson);
+  } catch (err) {
+    return HttpResponse.notFound();
+  }
 };
 
 const getAllPersonController = async () => {
-  const result = await get();
-  if (result.length) return HttpResponse.success(result);
+  try {
+    const result = await get();
+    if (result.length) return HttpResponse.success(result);
+  } catch (err) {
+    return HttpResponse.notFound();
+  }
 };
 
 const getPersonController = async (id) => {
