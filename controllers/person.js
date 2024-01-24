@@ -1,13 +1,7 @@
-const HttpResponse = require("../helpers/httpResponse");
-const {
-  create,
-  get,
-  getOne,
-  update,
-  deleteOne,
-} = require("../database/person");
+import HttpResponse from "../helpers/httpResponse.js";
+import { create, get, getOne, update, deleteOne } from "../database/person.js";
 
-const createPersonController = async (person) => {
+export const createPersonController = async (person) => {
   const requiredFields = Object.keys(person);
 
   for (const field of requiredFields) {
@@ -26,7 +20,7 @@ const createPersonController = async (person) => {
   }
 };
 
-const getAllPersonController = async () => {
+export const getAllPersonController = async () => {
   try {
     const result = await get();
     if (result.length) return HttpResponse.success(result);
@@ -35,7 +29,7 @@ const getAllPersonController = async () => {
   }
 };
 
-const getPersonController = async (id) => {
+export const getPersonController = async (id) => {
   try {
     const result = await getOne({ _id: id });
     if (result) return HttpResponse.success(result);
@@ -44,7 +38,7 @@ const getPersonController = async (id) => {
   }
 };
 
-const updatePersonController = async (id, person) => {
+export const updatePersonController = async (id, person) => {
   try {
     const updatedPerson = await update({ _id: id }, person);
     if (updatedPerson.matchedCount) return HttpResponse.success();
@@ -54,19 +48,11 @@ const updatePersonController = async (id, person) => {
   }
 };
 
-const deletePersonController = async (id) => {
+export const deletePersonController = async (id) => {
   try {
     await deleteOne({ _id: id });
     return HttpResponse.deleted();
   } catch (err) {
     return HttpResponse.notFound();
   }
-};
-
-module.exports = {
-  createPersonController,
-  getAllPersonController,
-  getPersonController,
-  updatePersonController,
-  deletePersonController,
 };

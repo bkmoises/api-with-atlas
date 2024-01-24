@@ -1,23 +1,21 @@
-const db = require("../models/person");
+import db from "../models/person.js";
 
-const get = async () => {
+export const get = async () => {
   return db.find();
 };
 
-const getOne = async (obj) => {
+export const getOne = async (obj) => {
   return db.findOne(obj);
 };
 
-const create = async (person) => {
+export const create = async (person) => {
   return db.create(person);
 };
 
-const update = async (obj, person) => {
+export const update = async (obj, person) => {
   return db.updateOne(obj, person);
 };
 
-const deleteOne = async (obj) => {
+export const deleteOne = async (obj) => {
   return db.deleteOne(obj);
 };
-
-module.exports = { get, getOne, create, update, deleteOne };

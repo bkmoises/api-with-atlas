@@ -1,4 +1,4 @@
-class HttpResponse {
+export default class HttpResponse {
   /**
    * Retorna uma resposta de sucesso (status 200).
    * @param {Object} obj - Objeto a ser retornado no corpo da resposta.
@@ -74,5 +74,3 @@ class HttpResponse {
     };
   }
 }
-
-module.exports = HttpResponse;

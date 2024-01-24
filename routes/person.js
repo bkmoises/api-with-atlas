@@ -1,13 +1,16 @@
-const router = require("express").Router();
-const {
+import { Router } from "express";
+
+const router = Router();
+
+import {
   getAll,
   createPerson,
   getPerson,
   updatePerson,
   deletePerson,
-} = require("../services/person");
+} from "../services/person.js";
 
 router.route("/").get(getAll).post(createPerson);
 router.route("/:id").get(getPerson).put(updatePerson).delete(deletePerson);
 
-module.exports = router;
+export default router;
